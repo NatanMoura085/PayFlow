@@ -54,7 +54,8 @@ public class AuthService {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(response.getBody());
             String accessToken = node.get("access_token").asText();
-            return new TokenResponse(accessToken);
+            String refreshToken = node.get("refresh_token").asText();
+            return new TokenResponse(accessToken,refreshToken);
         } else {
             throw new RuntimeException("Erro ao autenticar: " + response.getStatusCode());
         }
