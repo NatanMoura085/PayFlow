@@ -8,7 +8,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "N4t@n$3Cr3t0!JWT2024#TokenSeguro";
+    private final String secretKey = "YWFhYmJiY2NjZGRkAiOiJhcHfdsfdfsfdsfdsfdsfsdBfcGF5bWVudCfdsfdsfsZWVlZmZmMTIzNDUbG1ub3BxcnN0";
     private final long accessTokenValidity = 1000 * 60 * 15; // 15 min
     private final long refreshTokenValidity = 1000 * 60 * 60 * 24 * 7; // 7 dias
 
@@ -31,12 +31,25 @@ public class JwtTokenProvider {
 
     public boolean isValidToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
+            Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
-            return false;
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token expirado: " + e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            System.out.println("Token não suportado: " + e.getMessage());
+        } catch (MalformedJwtException e) {
+            System.out.println("Token malformado: " + e.getMessage());
+        } catch (SignatureException e) {
+            System.out.println("Assinatura inválida: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Token vazio ou nulo: " + e.getMessage());
         }
+        return false;
     }
+
 
     public String getUserIdFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();

@@ -12,7 +12,7 @@ import java.util.Map;
 public class JWTConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
-        Map<String, Collection<String>> realmAcess = jwt.getClaim("realm_acess");
+        Map<String, Collection<String>> realmAcess = jwt.getClaim("realm_access");
         Collection<String> roles = realmAcess.get("roles");
         var grants = roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).toList();
         return new JwtAuthenticationToken(jwt, grants);
