@@ -16,6 +16,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Service
 public class AuthService {
@@ -31,6 +34,12 @@ public class AuthService {
 
     @Value("${keycloak.realm}")
     private String realm;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+ public AuthService(){
+     this.objectMapper = new ObjectMapper();
+     this.restTemplate = new RestTemplate();
+ }
 
     public TokenResponse login(LoginRequest request) throws JsonProcessingException {
         String url = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
@@ -60,4 +69,37 @@ public class AuthService {
             throw new RuntimeException("Erro ao autenticar: " + response.getStatusCode());
         }
     }
+
+    public TokenResponse refreshToken(String refreshToken) {
+        String tokenUrl = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+
+        MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+        form.add("grant_type", "refresh_token");
+        form.add("client_id", clientId);
+        form.add("client_secret", clientSecret); // Omitir se o client for público
+        form.add("refresh_token", refreshToken);
+
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(form, headers);
+
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, request, Map.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            Map<String, Object> body = response.getBody();
+            String accessToken = (String) body.get("access_token");
+            String newRefreshToken = (String) body.get("refresh_token");
+
+            return new TokenResponse(accessToken, newRefreshToken);
+        }
+
+        // Se não for bem-sucedido, lançar uma exceção
+        throw new RuntimeException("Falha ao renovar token com Keycloak");
+    }
+
 }
