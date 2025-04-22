@@ -1,6 +1,7 @@
 package com.api.application.controllers;
 
 import com.api.application.dtos.authDTOS.LoginRequest;
+import com.api.application.dtos.authDTOS.LogoutRequest;
 import com.api.application.dtos.authDTOS.RefreshTokenRequest;
 import com.api.application.dtos.authDTOS.TokenResponse;
 import com.api.infrastructure.adapters.AuthService;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -32,4 +35,12 @@ public class AuthController {
         TokenResponse tokenResponse = authService.refreshToken(request.refreshToken());
         return ResponseEntity.ok(tokenResponse);
     }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody LogoutRequest logoutRequest) {
+        String refreshToken = logoutRequest.refreshToken();
+        authService.logout(refreshToken);
+        return ResponseEntity.ok("Logout realizado com sucesso.");
+    }
+
 }
+

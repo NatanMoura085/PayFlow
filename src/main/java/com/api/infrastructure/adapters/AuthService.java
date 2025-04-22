@@ -97,9 +97,27 @@ public class AuthService {
 
             return new TokenResponse(accessToken, newRefreshToken);
         }
-
-        // Se não for bem-sucedido, lançar uma exceção
         throw new RuntimeException("Falha ao renovar token com Keycloak");
     }
+    public void logout(String refreshToken) {
+        String logoutUrl = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/logout";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+        form.add("client_id", clientId);
+        form.add("client_secret", clientSecret); // Omitir se o client for público
+        form.add("refresh_token", refreshToken);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(form, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(logoutUrl, request, String.class);
+
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Erro ao fazer logout: " + response.getStatusCode());
+        }
+    }
+
 
 }
