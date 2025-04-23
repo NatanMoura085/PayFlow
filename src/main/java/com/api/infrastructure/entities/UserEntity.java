@@ -1,5 +1,7 @@
 package com.api.infrastructure.entities;
 
+import com.api.application.dtos.inputDTOS.UserInputDTO;
+import com.api.application.dtos.outputDTOS.UserOutputDTO;
 import com.api.core.enums.ROLE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,8 +22,13 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private ROLE role;
 
-    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<OrderEntity> orderEntityList;
-    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<PaymentEntity> paymentEntityList;
+    public UserEntity(UserInputDTO userInputDTO){
+        this.nome = userInputDTO.nome();
+        this.email = userInputDTO.email();
+        this.role = userInputDTO.role();
+    }
+
+    public UserEntity(){
+
+    }
 }

@@ -21,12 +21,11 @@ public class PaymentEntity {
     private LocalDateTime paymentDate;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private OrderEntity orderEntity;
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "order_id")
+    private Long orderId;
 
 
 }

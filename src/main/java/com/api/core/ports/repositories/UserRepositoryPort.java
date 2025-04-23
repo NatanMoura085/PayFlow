@@ -1,8 +1,13 @@
 package com.api.core.ports.repositories;
 
+import com.api.application.dtos.inputDTOS.UserInputDTO;
 import com.api.application.dtos.outputDTOS.UserOutputDTO;
 
+import java.util.List;
+
 public interface UserRepositoryPort {
-    void saveUser(Long userId,String username,String email);
-    UserOutputDTO getUser(Long userId);
+
+    List<UserOutputDTO> getAllUsers();
+    UserOutputDTO createUser(UserInputDTO userInputDTO);
+
 }

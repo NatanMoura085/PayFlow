@@ -1,5 +1,6 @@
 package com.api.infrastructure.entities;
 
+import com.api.application.dtos.inputDTOS.OrderInputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,13 +15,22 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long paymentId;
     private String status;
     private LocalDateTime createAt;
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
-    @OneToOne
-    @JoinColumn(name = "payment_id")
-    private PaymentEntity paymentEntity;
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "payment_id")
+    private String paymentId;
+
+    public OrderEntity() {
+
+    }
+
+    public OrderEntity(OrderInputDTO orderInputDTO){
+        this.status = orderInputDTO.status();
+        this.createAt = orderInputDTO.createAt();
+        this.userId = orderInputDTO.userId();
+        this.paymentId = orderInputDTO.paymentId();
+    }
 }
