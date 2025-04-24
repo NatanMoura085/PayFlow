@@ -21,8 +21,8 @@ services:
     container_name: rabbitmq
     restart: always
     environment:
-      RABBITMQ_DEFAULT_USER: rabbitmq
-      RABBITMQ_DEFAULT_PASS: rabbitmq
+      RABBITMQ_DEFAULT_USER: test
+      RABBITMQ_DEFAULT_PASS: test
     ports:
       - "5672:5672"  # Porta para mensagens
       - "15672:15672" # Painel de controle
