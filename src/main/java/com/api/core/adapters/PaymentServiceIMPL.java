@@ -1,5 +1,7 @@
 package com.api.core.adapters;
 
+import com.api.application.dtos.inputDTOS.PaymentInputDTO;
+import com.api.application.dtos.outputDTOS.PaymentOutputDTO;
 import com.api.core.model.Payment;
 import com.api.core.ports.interfaces.PaymentServicePort;
 
@@ -11,8 +13,13 @@ public class PaymentServiceIMPL implements PaymentServicePort {
     }
 
     @Override
-    public Payment handlerProcessPayment(Payment payment) {
-        if (payment.getStatus().getStatus().equals("APPROVED")) {
+    public PaymentOutputDTO makePayment(PaymentInputDTO paymentInputDTO) {
+        return null;
+    }
+
+    @Override
+    public PaymentOutputDTO handlerProcessPayment(PaymentInputDTO paymentInputDTO) {
+        if (paymentInputDTO.status().getStatus().equals("APPROVED")) {
         return null;
 
         }
@@ -21,12 +28,12 @@ public class PaymentServiceIMPL implements PaymentServicePort {
     }
 
     @Override
-    public Payment getPaymentByOrderId(Long id) {
+    public PaymentOutputDTO getPaymentByOrderId(Long id) {
         return null;
     }
 
     @Override
-    public Payment updatePaymentStatus(Long paymentId, String status) {
+    public PaymentOutputDTO updatePaymentStatus(Long paymentId, String status) {
         return null;
     }
 }

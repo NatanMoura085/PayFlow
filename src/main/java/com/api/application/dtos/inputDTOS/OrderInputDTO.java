@@ -5,6 +5,6 @@ import com.api.infrastructure.entities.UserEntity;
 
 import java.time.LocalDateTime;
 
-public record OrderInputDTO(Long id, String status, LocalDateTime createAt, String userId,
-                            String paymentId) {
+public record OrderInputDTO(String status, LocalDateTime createAt, Long userId
+                            ) {
 }

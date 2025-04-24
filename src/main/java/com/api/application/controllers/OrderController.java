@@ -1,6 +1,7 @@
 package com.api.application.controllers;
 
 import com.api.application.dtos.inputDTOS.OrderInputDTO;
+import com.api.application.dtos.outputDTOS.OrderOutputDTO;
 import com.api.infrastructure.adapters.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,7 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<?> createOrder(@RequestBody OrderInputDTO orderInputDTO) {
-        orderService.createOrder(orderInputDTO);
-        return ResponseEntity.ok(orderInputDTO);
+    public ResponseEntity<OrderOutputDTO> createOrder(@RequestBody OrderInputDTO orderInputDTO) {
+        return ResponseEntity.ok(orderService.createOrder(orderInputDTO));
     }
 }

@@ -1,7 +1,7 @@
 package com.api.core.enums;
 
 public enum ROLE {
-        ROLE_ADMIN("ADMIN"), ROLE_USER("USER");
+      ADMIN("ADMIN"), USER("USER");
 
     private String status;
 

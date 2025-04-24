@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface OrderRepositoryPort {
     List<OrderOutputDTO> getAllOrders();
-    void createOrder(OrderInputDTO orderInputDTO);
+    OrderOutputDTO createOrder(OrderInputDTO orderInputDTO);
 
 }

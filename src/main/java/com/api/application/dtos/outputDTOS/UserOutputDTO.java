@@ -8,5 +8,5 @@ import com.api.infrastructure.entities.PaymentEntity;
 
 import java.util.List;
 
-public record UserOutputDTO(Long id, String nome, String email, ROLE role, List<OrderEntity> orders, List<PaymentEntity> payments) {
+public record UserOutputDTO(Long id, String nome, String email, ROLE role) {
 }

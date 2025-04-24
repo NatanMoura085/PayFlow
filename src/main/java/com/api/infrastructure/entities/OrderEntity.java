@@ -20,9 +20,6 @@ public class OrderEntity {
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "payment_id")
-    private String paymentId;
-
     public OrderEntity() {
 
     }
@@ -30,7 +27,6 @@ public class OrderEntity {
     public OrderEntity(OrderInputDTO orderInputDTO){
         this.status = orderInputDTO.status();
         this.createAt = orderInputDTO.createAt();
-        this.userId = orderInputDTO.userId();
-        this.paymentId = orderInputDTO.paymentId();
+        this.userId = String.valueOf(orderInputDTO.userId());
     }
 }
