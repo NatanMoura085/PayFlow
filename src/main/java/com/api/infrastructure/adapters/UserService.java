@@ -18,9 +18,10 @@ public UserService(SpringRepositoryUser springRepositoryUser){
 }
 
     @Override
-    public List<UserOutputDTO> getAllUsers() {
-      springRepositoryUser.findAll();
-      return null;
+    public List<UserEntity> getAllUsers() {
+
+      return springRepositoryUser.findAll();
+
     }
 
     @Override
@@ -28,5 +29,19 @@ public UserService(SpringRepositoryUser springRepositoryUser){
         UserEntity userEntity = new UserEntity(userInputDTO);
          springRepositoryUser.save(userEntity);
          return null;
+    }
+
+    @Override
+    public UserOutputDTO updateUser(Long id, UserInputDTO userInputDTO) {
+        UserEntity userEntity = springRepositoryUser.findById(id).orElseThrow();
+        //  userEntity.setId(id);
+        UserEntity user = springRepositoryUser.save(userEntity);
+        springRepositoryUser.save(user);
+        return null;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        springRepositoryUser.deleteById(id);
     }
 }

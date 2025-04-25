@@ -23,6 +23,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: test
       RABBITMQ_DEFAULT_PASS: test
+      RABBITMQ_DEFAULT_VHOST: "/"
     ports:
       - "5672:5672"  # Porta para mensagens
       - "15672:15672" # Painel de controle

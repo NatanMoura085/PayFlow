@@ -8,5 +8,7 @@ import java.util.List;
 public interface OrderRepositoryPort {
     List<OrderOutputDTO> getAllOrders();
     OrderOutputDTO createOrder(OrderInputDTO orderInputDTO);
+    OrderOutputDTO updateOrder(Long id, OrderInputDTO orderInputDTO);
+    void deleteOrder(Long id);
 
 }

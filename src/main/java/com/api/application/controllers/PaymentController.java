@@ -24,7 +24,6 @@ public class PaymentController {
     @PreAuthorize("hasRole('USER')")
     public String enviarMensagem(@AuthenticationPrincipal Jwt jwt, @RequestBody PaymentInputDTO paymentInputDTO) {
         String userId = jwt.getSubject();
-       // paymentInputDTO.orderId(Long.valueOf(userId));
         paymentService.makePayment(paymentInputDTO);
         paymentService.handlerProcessPayment(paymentInputDTO);
         return "Mensagen Enviadar";

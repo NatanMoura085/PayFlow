@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface UserRepositoryPort {
 
-    List<UserOutputDTO> getAllUsers();
+    List<?> getAllUsers();
     UserOutputDTO createUser(UserInputDTO userInputDTO);
+    UserOutputDTO updateUser(Long id, UserInputDTO userInputDTO);
+    void deleteUser(Long id);
 
 }

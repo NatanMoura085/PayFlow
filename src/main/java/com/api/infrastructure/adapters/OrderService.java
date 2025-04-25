@@ -7,10 +7,11 @@ import com.api.infrastructure.entities.OrderEntity;
 import com.api.infrastructure.entities.UserEntity;
 import com.api.infrastructure.repository.SpringRepositoryOrder;
 import com.api.infrastructure.repository.SpringRepositoryUser;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class OrderService implements OrderRepositoryPort {
@@ -35,5 +36,20 @@ public class OrderService implements OrderRepositoryPort {
 
         repositoryOrder.save(orderEntity);
         return new OrderOutputDTO(orderInputDTO.status(), orderInputDTO.createAt(),userEntity);
+    }
+
+    @Override
+    public OrderOutputDTO updateOrder(Long id, OrderInputDTO orderInputDTO) {
+       if (!repositoryOrder.existsById(id)){
+           ResponseEntity.notFound().build();
+       }
+
+     //  OrderEntity order = repositoryOrder.save(orderInputDTO)
+        return null;
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+    repositoryOrder.deleteById(id);
     }
 }
