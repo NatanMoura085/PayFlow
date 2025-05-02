@@ -3,6 +3,7 @@ package com.api.infrastructure.adapters;
 import com.api.application.dtos.inputDTOS.PaymentInputDTO;
 import com.api.application.dtos.outputDTOS.PaymentOutputDTO;
 import com.api.core.ports.interfaces.PaymentServicePort;
+import com.api.core.ports.repositories.PaymentRepositoryPort;
 import com.api.infrastructure.config.RabbitMQConfig;
 import com.api.infrastructure.entities.PaymentEntity;
 import com.api.infrastructure.repository.SpringRepositoryPayment;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaymentService implements PaymentServicePort {
+public class PaymentService implements PaymentRepositoryPort {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 

@@ -3,6 +3,7 @@ package com.api.application.controllers;
 import com.api.application.dtos.inputDTOS.PaymentInputDTO;
 import com.api.application.dtos.outputDTOS.PaymentOutputDTO;
 import com.api.core.model.Payment;
+import com.api.core.ports.interfaces.PaymentServicePort;
 import com.api.infrastructure.adapters.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class PaymentController {
     @Autowired
-    private PaymentService paymentService;
+    private PaymentServicePort paymentServicePort;
 
     @PostMapping("/payments")
     @PreAuthorize("hasRole('USER')")
     public String enviarMensagem(@AuthenticationPrincipal Jwt jwt, @RequestBody PaymentInputDTO paymentInputDTO) {
         String userId = jwt.getSubject();
-        paymentService.makePayment(paymentInputDTO);
-        paymentService.handlerProcessPayment(paymentInputDTO);
+        paymentServicePort.makePayment(paymentInputDTO);
+        paymentServicePort.handlerProcessPayment(paymentInputDTO);
         return "Mensagen Enviadar";
     }
 }
